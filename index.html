@@ -4,7 +4,133 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Gym Client</title>
-    <link rel="stylesheet" href="style.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 20px;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            background: url('https://cdn.discordapp.com/attachments/1332177402478071950/1333656456855289866/image.png?ex=6799afdd&is=67985e5d&hm=a7b390b0af50f3d6d0fa8b2211478c3dc42e2dec243c37d525b60bd726fbb03b&') no-repeat center center fixed;
+            background-size: cover;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            padding: 2rem;
+            border-radius: 15px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            color: white;
+            backdrop-filter: blur(10px);
+        }
+
+        .product-image {
+            width: 100%;
+            max-width: 400px;
+            height: auto;
+            border-radius: 10px;
+            margin: 1rem 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: transform 0.3s ease;
+        }
+
+        .product-image:hover {
+            transform: scale(1.02);
+        }
+
+        .features-list {
+            list-style: none;
+            padding: 0;
+            margin: 1.5rem 0;
+        }
+
+        .features-list li {
+            padding: 0.5rem 1rem;
+            margin: 0.5rem 0;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+        }
+
+        .features-list li::before {
+            content: "✓";
+            margin-right: 10px;
+            color: #4CAF50;
+        }
+
+        .buy-button {
+            background: linear-gradient(45deg, #4CAF50, #45a049);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.1rem;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            width: 100%;
+            max-width: 300px;
+            margin-top: 1rem;
+        }
+
+        .buy-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
+        }
+
+        .buy-button:active {
+            transform: translateY(0);
+        }
+
+        .price-tag {
+            font-size: 2rem;
+            font-weight: bold;
+            color: #4CAF50;
+            margin: 1rem 0;
+        }
+
+        .developers {
+            margin-top: 2rem;
+            text-align: center;
+            color: white;
+            user-select: none;
+        }
+
+        .developers h2 {
+            margin-bottom: 1rem;
+        }
+
+        .developer-list {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+
+        .developer {
+            text-align: center;
+        }
+
+        .developer img {
+            width: 250px;
+            height: 350px;
+            border-radius: 0%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            margin-top: 0.5rem;
+        }
+
+        .developer-name {
+            margin-top: 0.5rem;
+            font-size: 1rem;
+            font-weight: bold;
+            color: white;
+            user-select: none; /* Prevent copying */
+        }
+    </style>
 </head>
 <body>
     <div class="container">
