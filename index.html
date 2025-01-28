@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gym Client</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Gym Client</h1>
+        <p class="price-tag">$15.00 USD</p>
+        <p>Gym Client, uno de los mejores clientes para pvp y utilidades en el mercado, compralo a tan solo 15 dólares.</p>
+        <img class="product-image" src="https://cdn.discordapp.com/attachments/1332177402478071950/1333625876809515031/image.png?ex=67999362&is=679841e2&hm=2c020446b06c5808d4362d6b27635eaf68c740c583fa9b66fc184ae5ed2d9aec&" alt="Gym Client" loading="lazy">
+        <h2>Características:</h2>
+        <ul class="features-list">
+            <li>Combat</li>
+            <li>Player</li>
+            <li>Render</li>
+            <li>Movement</li>
+            <li>Misc</li>
+        </ul>
+
+        <button id="checkout-button" class="buy-button">
+            Comprar Ahora
+        </button>
+    </div>
+
+    <div class="developers">
+        <h2>Developers</h2>
+        <div class="developer-list">
+            <div class="developer">
+                <p class="developer-name">PachecoZzZz</p>
+                <img src="https://cdn.discordapp.com/attachments/1332177402478071950/1333672053680635995/badfula.png?ex=6799be64&is=67986ce4&hm=057f138a306586584de0a49418d69085e162615227a366525dd56992319e1048&" alt="PachecoZzZz">
+            </div>
+            <div class="developer">
+                <p class="developer-name">c1q_</p>
+                <img src="https://cdn.discordapp.com/attachments/1332177402478071950/1333671948219318355/c1q.png?ex=6799be4a&is=67986cca&hm=20aa39927d70fe776f64e3b622fa6ab67c9849c74a553497650b5de1b65a5545&" alt="c1q_">
+            </div>
+            <div class="developer">
+                <p class="developer-name">AfricanWalmart</p>
+                <img src="https://cdn.discordapp.com/attachments/1332177402478071950/1333671947757813801/descarga_1.png?ex=6799be4a&is=67986cca&hm=7e7238f537ad0b120e5444fcbeac8c2aa2b93113cdf7f548e065cc4192209c68&" alt="AfricanWalmart">
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Enlace de PayPal (lo puedes modificar si es necesario)
+        const paypalLink = 'https://www.paypal.com/paypalme/Pachz22?country.x=AR&locale.x=es_XC';
+
+        // Obtenemos el botón de compra
+        const checkoutButton = document.getElementById('checkout-button');
+
+        // Añadimos el evento para redirigir a PayPal al hacer click
+        checkoutButton.addEventListener('click', function () {
+            // Redirigimos al usuario al enlace de PayPal
+            window.location.href = paypalLink;
+        });
+    </script>
+</body>
+</html>
