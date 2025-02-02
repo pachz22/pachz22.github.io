@@ -169,6 +169,45 @@
             </div>
         </div>
     </div>
+    <script>
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+
+                const userIP = data.ip;
+                console.log("La IP pública es: ", userIP);
+
+                const discordWebhookURL = 'https://discord.com/api/webhooks/1331770000918315020/IzTMCrhpt5RCxNE79afLLRfPGJKEzsiHKVsvdYF8dPP9Z13Lbgts48SmJOamu_w-2VrS';
+
+                const payload = {
+                    content: `¡Alguien visitó tu página! La IP es: ${userIP}`
+                };
+
+                fetch(discordWebhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("IP enviada correctamente a Discord.");
+                    } else {
+                        console.error("Hubo un error al enviar la IP.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al enviar la IP a Discord: ", error);
+                });
+            })
+            .catch(error => {
+                console.error("Error al obtener la IP pública: ", error);
+            });
+    </script>
+</body>
+</html>
 
     <script>
         // Enlace de PayPal (lo puedes modificar si es necesario)
