@@ -193,10 +193,9 @@ async function buscarIP() {
   ipResultElement.textContent = "🔄 Buscando información...";
 
   try {
-    // Usar proxy CORS para evitar bloqueo
-    const proxyUrl = 'https://corsproxy.io/?';
+    const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
     const apiUrl = `http://ip-api.com/json/${ip}`;
-    const response = await fetch(proxyUrl + encodeURIComponent(apiUrl));
+    const response = await fetch(proxyUrl + apiUrl);
     const data = await response.json();
 
     if (data.status === "fail") {
@@ -222,6 +221,7 @@ async function buscarIP() {
     console.error(error);
   }
 }
+
 
 
   function descargarIPInfo() {
